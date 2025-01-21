@@ -4,6 +4,7 @@ from pathlib import Path
 from params import * 
 
 OUTPUT_FILE_NAME = "output.json"
+CONVERT_FROM_BYTES, FILE_SIZE_UNIT = 1024, "KB"
 
 def get_matching_files(directory, file_types):
     """
@@ -14,19 +15,20 @@ def get_matching_files(directory, file_types):
         file_types (list): List of file extensions to match.
 
     Returns:
-        list: A list of file paths relative to the given directory.
+        list: A list of dictionaries with file details.
     """
     matching_files = []
     for root, _, files in os.walk(directory):
         for file in files:
             if any(file.endswith(ext) for ext in file_types):
                 relative_path = os.path.relpath(os.path.join(root, file), directory)
+                file_size = os.path.getsize(os.path.join(root, file))
                 matching_files.append({
-                    "file_name": relative_path,
-                    "file_size": '',
+                    "file_name": file,
+                    "file_size": f'{round(file_size/CONVERT_FROM_BYTES)}{FILE_SIZE_UNIT}',
                     "patient_id": '',
                     "sample_id": '',
-                    "directory": ''
+                    "directory": f'./{relative_path}'
                 })
     return matching_files
 
