@@ -26,8 +26,8 @@ def get_matching_files(directory, file_types):
                 matching_files.append({
                     "file_name": file,
                     "file_size": f'{round(file_size/CONVERT_FROM_BYTES)}{FILE_SIZE_UNIT}',
-                    "patient_id": '',
-                    "sample_id": '',
+                    "patient_id": '', # still need to implement
+                    "sample_id": '', # still need to implement
                     "directory": f'./{relative_path}'
                 })
     return matching_files
@@ -49,11 +49,6 @@ def generate_json(directory, output_file):
     raw_files = get_matching_files(directory, RAW_FILE_TYPES)
     processed_files = get_matching_files(directory, PROCESSED_FILE_TYPES)
     summarised_files = get_matching_files(directory, SUMMARISED_FILE_TYPES)
-
-
-    # implement here!!! transform array of file paths to array of objects (json)
-
-
     output_data = {
         "data": {
             "location": directory, 
