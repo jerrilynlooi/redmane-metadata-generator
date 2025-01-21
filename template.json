@@ -1,0 +1,46 @@
+{
+  "data": {
+    "location": "/vast/projects/TDE/TDE0005/",
+    "files": {
+      "raw": [
+        {
+          "file_name": "batch1_test_LC_Sample1.fastq",
+          "file_size": "15KB",
+          "patient_id": "ICGC_0425",
+          "sample_id": "LC_Sample1",
+          "directory": "./raw_data/batch1_test_LC_Sample1.fastq"
+        },
+        {
+          "file_name": "batch1_test_LC_Sample2.fastq",
+          "file_size": "17KB",
+          "patient_id": "ICGC_0428",
+          "sample_id": "LC_Sample2",
+          "directory": "./raw_data/batch1_test_LC_Sample2.fastq"
+        },
+        {
+          "file_name": "batch1_test_LC_Sample3.fastq",
+          "file_size": "14KB",
+          "patient_id": "ICGC_0432",
+          "sample_id": "LC_Sample3",
+          "directory": "./raw_data/batch1_test_LC_Sample3.fastq"
+        },
+        {
+          "file_name": "batch2_test_LC_Sample4.fastq",
+          "file_size": "21KB",
+          "patient_id": "ICGC_0433",
+          "sample_id": "LC_Sample4",
+          "directory": "./raw_data/batch1_test_LC_Sample4.fastq"
+        },
+        {
+          "file_name": "batch2_test_LC_Sample5.fastq",
+          "file_size": "20KB",
+          "patient_id": "ICGC_0440",
+          "sample_id": "LC_Sample5",
+          "directory": "./raw_data/batch1_test_LC_Sample5.fastq"
+        }
+      ],
+      "processed": [],
+      "summarised": []
+    }
+  }
+}
