@@ -11,6 +11,7 @@ Tells the script what filetypes to look for.
 
 Currently:
 - lists filenames of matching filetypes for raw/processed/summarised
+
 To Implement:
 - mapping of sampleId and patientId (likely using another constants file - to replace with API)
 - generating of file object for JSON
