@@ -3,9 +3,6 @@ import json
 from pathlib import Path
 from params import * 
 
-OUTPUT_FILE_NAME = "output.json"
-CONVERT_FROM_BYTES, FILE_SIZE_UNIT = 1024, "KB"
-
 def get_matching_files(directory, file_types):
     """
     Recursively find files in a directory that match the given file types.
@@ -76,7 +73,7 @@ if __name__ == "__main__":
 
     # Define the output file path (in the same directory as the script)
     script_directory = Path(__file__).parent
-    output_file_path = script_directory / OUTPUT_FILE_NAME
+    output_file_path = script_directory / OUTPUT_JSON_FILE_NAME
 
     try:
         generate_json(target_directory, output_file_path)
