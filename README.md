@@ -7,7 +7,7 @@ by Data Ingestion Team
 
 ### 2 - To run:
 - `python update_local.py /path/to/directory`
-- --> generates `output.json`
+- --> generates `output.json` and `output.html`
 
 Currently:
 - lists filenames of matching filetypes for raw/processed/summarised
@@ -18,7 +18,8 @@ To Implement:
 - searching of subdirectories for files
 
 ## Files
-- `update_local.py` - script
+- `update_local.py` - script to create json
+- `generate_html.py` - script with function to generate html
 - `params.py` - set parameters here
 - `template.json` - example of what output.json should be formatted like
 - `.gitignore`

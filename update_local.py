@@ -2,6 +2,7 @@ import os
 import json
 from pathlib import Path
 from params import * 
+from generate_html import generate_html_from_json
 
 def get_matching_files(directory, file_types):
     """
@@ -74,8 +75,10 @@ if __name__ == "__main__":
     # Define the output file path (in the same directory as the script)
     script_directory = Path(__file__).parent
     output_file_path = script_directory / OUTPUT_JSON_FILE_NAME
+    output_html_path = script_directory / OUTPUT_HTML_FILE_NAME
 
     try:
         generate_json(target_directory, output_file_path)
+        generate_html_from_json(output_file_path, output_html_path)
     except Exception as e:
         print(f"Error: {e}")
