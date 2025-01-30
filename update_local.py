@@ -16,18 +16,28 @@ def get_matching_files(directory, file_types):
         list: A list of dictionaries with file details.
     """
     matching_files = []
+    total_file_size = 0
     for root, _, files in os.walk(directory):
         for file in files:
             if any(file.endswith(ext) for ext in file_types):
                 relative_path = os.path.relpath(os.path.join(root, file), directory)
-                file_size = os.path.getsize(os.path.join(root, file))
-                matching_files.append({
+                file_path = f'./{relative_path}'
+                file_size = round(os.path.getsize(os.path.join(root, file))/CONVERT_FROM_BYTES)
+                total_file_size += file_size
+                file_object = {
                     "file_name": file,
-                    "file_size": round(file_size/CONVERT_FROM_BYTES),
+                    "file_size": file_size,
                     "patient_id": '', # still need to implement
                     "sample_id": '', # still need to implement
-                    "directory": f'./{relative_path}'
-                })
+                    "directory": file_path
+                }
+                print(f" | {file_path}  ~{file_size}{FILE_SIZE_UNIT}")
+                matching_files.append(file_object)
+                
+    if not matching_files:
+        print(f" | No files found")
+    else:
+        print(f" | \n | Total size of files is {total_file_size} {FILE_SIZE_UNIT}")
     return matching_files
 
 def generate_json(directory, output_file):
@@ -44,8 +54,11 @@ def generate_json(directory, output_file):
     if not os.path.isdir(directory):
         raise ValueError(f"The specified path '{directory}' is not a valid directory.")
 
+    print(f"\nListing for raw files ({', '.join(RAW_FILE_TYPES)}) files")
     raw_files = get_matching_files(directory, RAW_FILE_TYPES)
+    print(f"\nListing for processed files ({', '.join(PROCESSED_FILE_TYPES)}) files")
     processed_files = get_matching_files(directory, PROCESSED_FILE_TYPES)
+    print(f"\nListing for summarised files ({', '.join(SUMMARISED_FILE_TYPES)}) files")
     summarised_files = get_matching_files(directory, SUMMARISED_FILE_TYPES)
     output_data = {
         "data": {
@@ -62,7 +75,7 @@ def generate_json(directory, output_file):
     with open(output_file, "w") as f:
         json.dump(output_data, f, indent=4)
 
-    print(f"JSON file generated at: {output_file}")
+    print(f"\nJSON file generated at: {output_file}")
 
 if __name__ == "__main__":
     import sys
@@ -72,14 +85,15 @@ if __name__ == "__main__":
         sys.exit(1)
 
     target_directory = sys.argv[1]
+    print(f"\nSearching through /{target_directory} .........")
 
     # Define the output file path (in the same directory as the script)
     script_directory = Path(__file__).parent
     output_file_path = script_directory / OUTPUT_JSON_FILE_NAME
     output_html_path = script_directory / OUTPUT_HTML_FILE_NAME
-
     try:
         generate_json(target_directory, output_file_path)
         generate_html_from_json(output_file_path, output_html_path)
+        print(f"")
     except Exception as e:
         print(f"Error: {e}")
