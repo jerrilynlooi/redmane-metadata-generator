@@ -23,7 +23,7 @@ def get_matching_files(directory, file_types):
                 file_size = os.path.getsize(os.path.join(root, file))
                 matching_files.append({
                     "file_name": file,
-                    "file_size": f'{round(file_size/CONVERT_FROM_BYTES)}{FILE_SIZE_UNIT}',
+                    "file_size": round(file_size/CONVERT_FROM_BYTES),
                     "patient_id": '', # still need to implement
                     "sample_id": '', # still need to implement
                     "directory": f'./{relative_path}'
@@ -50,6 +50,7 @@ def generate_json(directory, output_file):
     output_data = {
         "data": {
             "location": directory, 
+            "file_size_unit": FILE_SIZE_UNIT,
             "files": {
                 "raw": raw_files,
                 "processed": processed_files,

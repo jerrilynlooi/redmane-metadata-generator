@@ -15,6 +15,7 @@ def generate_html_from_json(json_file, output_html):
         data = json.load(f)
 
     location = data["data"]["location"]
+    file_size_unit = data["data"]["file_size_unit"]
     files = data["data"]["files"]
 
     html_content = f"""
@@ -53,7 +54,7 @@ def generate_html_from_json(json_file, output_html):
             html_content += f"""
             <tr>
                 <td>{file['file_name']}</td>
-                <td>{file['file_size']}</td>
+                <td>{file['file_size']} {file_size_unit}</td>
                 <td>{file['patient_id']}</td>
                 <td>{file['sample_id']}</td>
                 <td>{file['directory']}</td>
