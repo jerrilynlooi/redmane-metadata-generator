@@ -4,6 +4,28 @@ from pathlib import Path
 from params import * 
 from generate_html import generate_html_from_json
 
+def get_ids(file, id_type):
+    """
+    Returns a list of patient/sample id from the given metadata file. metadata file name
+    and patient/sample id names are configured in params.py.
+
+    Args:
+        file (str): name of the metadata file in this directory
+        id_type (PATIENT_ID or SAMPLE_ID)
+
+        Returns:
+            list: A list of patient/sample ids
+
+    """
+    if id_type not in {PATIENT_ID, SAMPLE_ID}:
+        raise ValueError(f"Invalid value: {id_type}. Must be 'PATIENT_ID' or 'SAMPLE_ID'.")
+    with open(file, "r") as f:
+        data = json.load(f)
+        id_list = []
+    for i in data:
+        id_list.append(i[id_type])
+    return id_list
+
 def get_matching_files(directory, file_types):
     """
     Recursively find files in a directory that match the given file types.
@@ -33,7 +55,17 @@ def get_matching_files(directory, file_types):
                 }
                 print(f" | {file_path}  ~{file_size}{FILE_SIZE_UNIT}")
                 matching_files.append(file_object)
-                
+
+    #Append the patient/sample id found in the metadata, if it matches with the file name
+    for id in get_ids(METADATA, PATIENT_ID):
+        for file in matching_files:
+            if id in file["file_name"]:
+                file["patient_id"] = id
+    for id in get_ids(METADATA, SAMPLE_ID):
+        for file in matching_files:
+            if id in file["file_name"]:
+                file["sample_id"] = id
+
     if not matching_files:
         print(f" | No files found")
     else:
