@@ -56,7 +56,7 @@ def get_matching_files(directory, file_types):
                 matching_files.append(file_object)
 
     # Append the patient/sample ids found in the metadata (defined in params),
-    # that matches with the file name
+    # if it matches with the file name
     for id in get_ids(METADATA, "Patient ID"):
         for file in matching_files:
             if id in file["file_name"]:
