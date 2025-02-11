@@ -9,17 +9,17 @@ by Data Ingestion Team
 - `python update_local.py /path/to/directory`
 - --> generates `output.json` and `output.html`
 
-Currently:
-- lists filenames of matching filetypes for raw/processed/summarised
-
-To Implement:
-- mapping of sampleId and patientId (likely using another constants file - to replace with API)
-- generating of file object for JSON
-- searching of subdirectories for files
+Output:
+- searches directory and subdirectories for files with matching filetype for raw/processed/summarised
+- maps to matching sampleId and patient based on filename (to replace with API)
+- generates summary of files found to output.json
+- allows user to double check data using table generated in output.html
 
 ## Files
 - `update_local.py` - script to create json
 - `generate_html.py` - script with function to generate html
 - `params.py` - set parameters here
 - `template.json` - example of what output.json should be formatted like
+- `sampled_clinical_data.json`
+- `/sample_files`
 - `.gitignore`

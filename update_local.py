@@ -1,29 +1,28 @@
 import os
 import json
 from pathlib import Path
-from params import * 
+from params import *
 from generate_html import generate_html_from_json
 
-def get_ids(file, id_type):
+def get_ids(file, id):
     """
-    Returns a list of patient/sample id from the given metadata file. metadata file name
-    and patient/sample id names are configured in params.py.
+    Returns a list of patient/sample id from the given metadata file.
 
     Args:
         file (str): name of the metadata file in this directory
-        id_type (PATIENT_ID or SAMPLE_ID)
+        id ("Patient ID" or "Sample ID")
 
         Returns:
             list: A list of patient/sample ids
 
     """
-    if id_type not in {PATIENT_ID, SAMPLE_ID}:
-        raise ValueError(f"Invalid value: {id_type}. Must be 'PATIENT_ID' or 'SAMPLE_ID'.")
+    if id not in {"Patient ID", "Sample ID"}:
+        raise ValueError(f"Invalid value: {id}. Must be 'Patient ID' or 'Sample ID'.")
     with open(file, "r") as f:
         data = json.load(f)
         id_list = []
     for i in data:
-        id_list.append(i[id_type])
+        id_list.append(i[id])
     return id_list
 
 def get_matching_files(directory, file_types):
@@ -49,19 +48,20 @@ def get_matching_files(directory, file_types):
                 file_object = {
                     "file_name": file,
                     "file_size": file_size,
-                    "patient_id": '', # still need to implement
-                    "sample_id": '', # still need to implement
+                    "patient_id": '',
+                    "sample_id": '',
                     "directory": file_path
                 }
                 print(f" | {file_path}  ~{file_size}{FILE_SIZE_UNIT}")
                 matching_files.append(file_object)
 
-    #Append the patient/sample id found in the metadata, if it matches with the file name
-    for id in get_ids(METADATA, PATIENT_ID):
+    # Append the patient/sample ids found in the metadata (defined in params),
+    # if it matches with the file name
+    for id in get_ids(METADATA, "Patient ID"):
         for file in matching_files:
             if id in file["file_name"]:
                 file["patient_id"] = id
-    for id in get_ids(METADATA, SAMPLE_ID):
+    for id in get_ids(METADATA, "Sample ID"):
         for file in matching_files:
             if id in file["file_name"]:
                 file["sample_id"] = id
@@ -94,7 +94,7 @@ def generate_json(directory, output_file):
     summarised_files = get_matching_files(directory, SUMMARISED_FILE_TYPES)
     output_data = {
         "data": {
-            "location": directory, 
+            "location": directory,
             "file_size_unit": FILE_SIZE_UNIT,
             "files": {
                 "raw": raw_files,
