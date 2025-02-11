@@ -19,7 +19,8 @@ Output:
 - `update_local.py` - script to create json
 - `generate_html.py` - script with function to generate html
 - `params.py` - set parameters here
-- `template.json` - example of what output.json should be formatted like
+- `template.json` - example of what `output.json` should be formatted
+- `template.html` - example of what `output.html` should be formatted based on `template.json`
 - `sampled_clinical_data.json`
 - `/sample_files`
 - `.gitignore`
